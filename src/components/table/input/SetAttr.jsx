@@ -5,20 +5,29 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { attrs } from '../data';
+import { StChoiceContext } from '../../../App';
+import { useContext } from 'react';
+
+const makeStCopy = (prev, atr, type, index) => {
+  const copySt = prev.map((obj) => {
+    const copy = { ...obj }
+    if (copy[type] === atr) {
+      copy[type] = ""
+    }
+    return copy
+  })
+  copySt[index][type] = atr
+  return copySt
+}
 
 const SetAttr = ({ hObj, setSt, index }) => {
+  const stChoice = useContext(StChoiceContext)
+
   const handleChange = (event, type) => {
     setSt((prev) => {
       const atr = event.target.value
-      const copySt = prev.map((obj) => {
-        const copy = { ...obj }
-        if (copy[type] === atr) {
-          copy[type] = ""
-        }
-        return copy
-      })
-      copySt[index][type] = atr
-      return copySt
+      stChoice.stArr.push(makeStCopy(prev, atr, type, index))
+      return makeStCopy(prev, atr, type, index)
     })
   };
 
@@ -27,7 +36,7 @@ const SetAttr = ({ hObj, setSt, index }) => {
       <FormControl fullWidth sx={{ marginBottom: "18px" }}>
         <InputLabel id="ein-select-label">{type}</InputLabel>
         <Select
-          sx={{ color: "black", fontWeight: 700 }}
+          sx={{ color: "black", fontWeight: 700, backgroundColor: "#85d9b0" }}
           labelId="ein-select-label"
           id="ein-select"
           label={type}

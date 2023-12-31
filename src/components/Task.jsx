@@ -3,10 +3,11 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Box } from '@mui/material';
 
 const Task = () => {
   return (
-    <div>
+    <Box sx={{ marginBottom: "14px", display: "flex" }}>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -28,7 +29,7 @@ const Task = () => {
           </Typography>
         </AccordionDetails>
       </Accordion>
-    </div>
+    </Box>
   )
 }
 export default Task
