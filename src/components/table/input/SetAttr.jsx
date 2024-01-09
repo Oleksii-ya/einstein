@@ -5,29 +5,27 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { attrs } from '../data';
-import { StChoiceContext } from '../../../App';
-import { useContext } from 'react';
 
-const makeStCopy = (prev, atr, type, index) => {
-  const copySt = prev.map((obj) => {
-    const copy = { ...obj }
-    if (copy[type] === atr) {
-      copy[type] = ""
-    }
-    return copy
-  })
-  copySt[index][type] = atr
-  return copySt
-}
-
-const SetAttr = ({ hObj, setSt, index }) => {
-  const stChoice = useContext(StChoiceContext)
-
+const SetAttr = ({ hObj, setSt, index, mkCh }) => {
   const handleChange = (event, type) => {
     setSt((prev) => {
       const atr = event.target.value
-      stChoice.stArr.push(makeStCopy(prev, atr, type, index))
-      return makeStCopy(prev, atr, type, index)
+      const copySt = prev.map((obj) => {
+        const copy = { ...obj }
+        if (copy[type] === atr) {
+          copy[type] = ""
+        }
+        return copy
+      })
+      copySt[index][type] = atr
+      const change = {
+        index,
+        type,
+        prev: prev[index][type],
+        next: atr
+      }
+      mkCh(change)
+      return copySt
     })
   };
 
